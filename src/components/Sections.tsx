@@ -103,6 +103,11 @@ export function Projects() {
 }
 
 export function Contact() {
+  const rows = [
+    { label: 'Email', text: profile.email, href: `mailto:${profile.email}`, external: false },
+    { label: 'LinkedIn', text: profile.linkedinLabel, href: profile.linkedin, external: true },
+    { label: 'GitHub', text: profile.githubLabel, href: profile.github, external: true },
+  ]
   return (
     <section className="section" id="contact" aria-labelledby="contact-h">
       <div className="wrap">
@@ -110,22 +115,24 @@ export function Contact() {
           <span>Contact</span>
           <span className="meta">{profile.location}</span>
         </div>
-        <h2 className="h2" id="contact-h">
-          Let&rsquo;s <em>talk.</em>
-        </h2>
-        <p className="contact__sub">
-          Internships, research, teaching: I&rsquo;m happy to hear about any of them.
-        </p>
-        <a className="contact__mail" href={`mailto:${profile.email}`}>
-          {profile.email}
-        </a>
-        <div className="contact__links">
-          <a className="btn" href={profile.linkedin} target="_blank" rel="noreferrer">
-            {profile.linkedinLabel} <span aria-hidden="true">↗</span>
-          </a>
-          <a className="btn" href={profile.github} target="_blank" rel="noreferrer">
-            {profile.githubLabel} <span aria-hidden="true">↗</span>
-          </a>
+        <div className="contact">
+          <h2 className="h2" id="contact-h">
+            Let&rsquo;s <em>talk.</em>
+          </h2>
+          <div>
+            <p className="contact__sub">Internships, research, teaching: I&rsquo;m happy to hear about any of them.</p>
+            <ul className="contact__list">
+              {rows.map((r) => (
+                <li key={r.label}>
+                  <span>{r.label}</span>
+                  <a href={r.href} {...(r.external ? { target: '_blank', rel: 'noreferrer' } : {})}>
+                    {r.text}
+                    {r.external && <i aria-hidden="true"> ↗</i>}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </section>

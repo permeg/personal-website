@@ -46,10 +46,7 @@ export function Hero() {
               <span>Megan</span>
               <span>Pereira</span>
             </h1>
-            <p className="hero__lede">
-              Computer science and economics student at the <strong>University of Washington</strong>. This summer I interned at AWS
-              as a software development engineer.
-            </p>
+
             <div className="hero__links">
               <a className="btn btn--primary" href="#experience">
                 Explore the map <span aria-hidden="true">↓</span>

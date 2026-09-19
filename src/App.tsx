@@ -15,10 +15,15 @@ export default function App() {
         <About />
         <Education />
         <Experience />
-        <Projects />
         <Contact />
       </main>
-      <Footer />
     </>
   )
 }
+
+//         <Projects /> After Experience, before Contact
+
+
+//       <Footer />
+
+

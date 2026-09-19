@@ -1,6 +1,6 @@
 import { Nav } from './components/Nav'
 import { Hero } from './components/Hero'
-import { About, Contact, Education, Footer, Projects } from './components/Sections'
+import { About, Contact, Education } from './components/Sections'
 import { Experience } from './components/Experience'
 
 export default function App() {

@@ -12,13 +12,15 @@ npm run build    # type-check + production build into dist/
 
 | To change | Edit |
 |---|---|
-| Map pins (roles shown on the map) | `src/data/pins.ts` |
+| Map pins: every role, its category, and its coordinates | `src/data/pins.ts` |
 | Project cards | `src/data/projects.ts` |
-| Bio, skills, education, "more from the ledger" list | `src/data/content.ts`, `src/components/Sections.tsx` |
+| Skills, education, hero "Lately" list | `src/data/content.ts` |
+| About copy, section headings | `src/components/Sections.tsx` |
 | Colors and type | `src/styles/global.css` (`:root` tokens), `src/map/style.ts` (`mapColors`, `tones`) |
 | Landmark icons, highway shields, water labels | `src/map/features.ts` |
 
-Add a photo to a pin by dropping an image in `public/photos/` and setting `photo: '/photos/aws.jpg'` on that pin.
+Pin photos live in `public/photos/` and are set with the `photo` field in `src/data/pins.ts`. They're from Wikimedia Commons under CC BY-SA licenses, and each card shows its credit; keep the credit if you swap a photo, or use your own and drop the credit fields.
+To add a category, add it to `categories` and the `CategoryId` type in `src/data/pins.ts`.
 
 ## Deep links
 

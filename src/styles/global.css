@@ -211,12 +211,6 @@ button {
   text-transform: uppercase;
   color: var(--accent);
 }
-.section__head .meta {
-  letter-spacing: 0.04em;
-  text-transform: none;
-  color: var(--text-muted);
-  text-align: right;
-}
 .h2 {
   font-size: clamp(30px, 4.6vw, 52px);
   line-height: 1.08;
@@ -640,29 +634,6 @@ button {
 @media (max-width: 860px) {
   .edu {
     grid-template-columns: minmax(0, 1fr);
-  }
-}
-
-/* ---------- projects ---------- */
-.projects {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 16px;
-}
-.projects > * {
-  grid-column: span 6;
-}
-.projects > :nth-child(1),
-.projects > :nth-child(4) {
-  grid-column: span 7;
-}
-.projects > :nth-child(2),
-.projects > :nth-child(5) {
-  grid-column: span 5;
-}
-@media (max-width: 860px) {
-  .projects > * {
-    grid-column: 1 / -1 !important;
   }
 }
 

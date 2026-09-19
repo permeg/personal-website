@@ -68,7 +68,6 @@ export function Experience() {
           <span>
             Experience
           </span>
-          <span className="meta">Seattle, WA · {pins.length} places</span>
         </div>
 
         <div className="exp__intro">

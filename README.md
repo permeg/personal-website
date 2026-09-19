@@ -13,7 +13,7 @@ npm run build    # type-check + production build into dist/
 | To change | Edit |
 |---|---|
 | Map pins: every role, its category, and its coordinates | `src/data/pins.ts` |
-| Project cards | `src/data/projects.ts` |
+| Projects section (name, description, skills, links) | `src/data/projects.ts` |
 | Skills, education, hero "Lately" list | `src/data/content.ts` |
 | About copy, section headings | `src/components/Sections.tsx` |
 | Colors and type | `src/styles/global.css` (`:root` tokens), `src/map/style.ts` (`mapColors`, `tones`) |

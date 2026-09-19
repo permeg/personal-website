@@ -1,6 +1,7 @@
 import { Nav } from './components/Nav'
 import { Hero } from './components/Hero'
 import { About, Contact, Education } from './components/Sections'
+import { Projects } from './components/Projects'
 import { Experience } from './components/Experience'
 
 export default function App() {
@@ -15,15 +16,11 @@ export default function App() {
         <About />
         <Education />
         <Experience />
+        <Projects />
         <Contact />
       </main>
     </>
   )
 }
-
-//         <Projects /> After Experience, before Contact
-
-
-//       <Footer />
 
 

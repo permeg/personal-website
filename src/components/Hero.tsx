@@ -1,0 +1,104 @@
+import { useEffect, useState } from 'react'
+import hero from '../data/heroMap.json'
+import { now, profile } from '../data/content'
+import { pins } from '../data/pins'
+
+function useSeattleTime() {
+  const fmt = () =>
+    new Intl.DateTimeFormat('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+      timeZone: 'America/Los_Angeles',
+      timeZoneName: 'short',
+    }).format(new Date())
+  const [t, setT] = useState(fmt)
+  useEffect(() => {
+    const id = setInterval(() => setT(fmt()), 20_000)
+    return () => clearInterval(id)
+  }, [])
+  return t
+}
+
+const { minX, maxY, kx, S } = hero.projection
+const project = (lng: number, lat: number) => [(lng - minX) * kx * S, (maxY - lat) * S] as const
+
+export function Hero() {
+  const time = useSeattleTime()
+  const [w, h] = hero.viewBox
+  const dots = pins.filter((p) => !p.placeholder)
+
+  return (
+    <header className="hero" id="top">
+      <div className="wrap hero__grid">
+        <div className="hero__copy">
+          <div className="hero__status">
+            <span>
+              <i className="dot" />
+              {profile.location}
+            </span>
+            <span>{time}</span>
+            <span>{profile.coords}</span>
+          </div>
+
+          <div>
+            <h1 className="hero__name">
+              <span>Megan</span>
+              <span>Pereira</span>
+            </h1>
+            <p className="hero__lede">
+              Computer science and economics student at the <strong>University of Washington</strong>, building software that
+              has to be right: schedulers, data pipelines, and real-time systems.
+            </p>
+            <div className="hero__links">
+              <a className="btn btn--primary" href="#experience">
+                Explore the map <span aria-hidden="true">↓</span>
+              </a>
+              <a className="btn" href={`mailto:${profile.email}`}>
+                Email
+              </a>
+              <a className="btn" href={profile.github} target="_blank" rel="noreferrer">
+                GitHub
+              </a>
+              <a className="btn" href={profile.linkedin} target="_blank" rel="noreferrer">
+                LinkedIn
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <p className="hero__now-label">Lately</p>
+            <ul className="hero__now">
+              {now.map((n) => (
+                <li key={n.where}>
+                  <span>{n.where}</span>
+                  <span>{n.what}</span>
+                  <span>{n.when}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="hero__map">
+          <svg viewBox={`-30 -30 ${w + 60} ${h + 60}`} role="img" aria-label="Outline of Seattle with four landmarks marked">
+            <path d={hero.outline} fill="#12161c" stroke="#a7acaf" strokeOpacity=".75" strokeWidth="1.2" vectorEffect="non-scaling-stroke" strokeLinejoin="round" />
+            <path d={hero.districts} fill="none" stroke="#3a424d" strokeWidth=".8" vectorEffect="non-scaling-stroke" strokeLinejoin="round" />
+            {dots.map((p) => {
+              const [x, y] = project(p.coords.lng, p.coords.lat)
+              const left = x > w * 0.55
+              return (
+                <a className="hp" key={p.id} href={`#experience?select=${p.id}`} aria-label={`${p.short}: open on the map`}>
+                  <circle className="halo" cx={x} cy={y} r="15" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
+                  <circle className="core" cx={x} cy={y} r="6" />
+                  <text x={x + (left ? -26 : 26)} y={y + 7} textAnchor={left ? 'end' : 'start'}>
+                    {p.short}
+                  </text>
+                </a>
+              )
+            })}
+          </svg>
+        </div>
+      </div>
+    </header>
+  )
+}

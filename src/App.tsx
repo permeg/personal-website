@@ -1,0 +1,24 @@
+import { Nav } from './components/Nav'
+import { Hero } from './components/Hero'
+import { About, Contact, Education, Footer, Projects } from './components/Sections'
+import { Experience } from './components/Experience'
+
+export default function App() {
+  return (
+    <>
+      <a className="skip" href="#about">
+        Skip to content
+      </a>
+      <Nav />
+      <Hero />
+      <main>
+        <About />
+        <Education />
+        <Experience />
+        <Projects />
+        <Contact />
+      </main>
+      <Footer />
+    </>
+  )
+}

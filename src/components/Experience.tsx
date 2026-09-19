@@ -1,6 +1,5 @@
 import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from 'react'
 import { categories, pins, type CategoryId } from '../data/pins'
-import { ledger } from '../data/content'
 import { DetailCard } from './DetailCard'
 // The map library is the heaviest thing on the page; load it after the first paint.
 const ExperienceMap = lazy(() => import('./ExperienceMap').then((m) => ({ default: m.ExperienceMap })))
@@ -67,18 +66,18 @@ export function Experience() {
       <div className="wrap">
         <div className="section__head">
           <span>
-            <b>03</b>Experience
+            Experience
           </span>
-          <span className="meta">Seattle, WA · {pins.filter((p) => !p.placeholder).length} landmarks</span>
+          <span className="meta">Seattle, WA · {pins.length} places</span>
         </div>
 
         <div className="exp__intro">
           <h2 className="h2" id="experience-h" style={{ maxWidth: '16ch' }}>
-            Four places I&rsquo;ve built things, <em>mapped.</em>
+            Where I&rsquo;ve worked and built, <em>mapped.</em>
           </h2>
           <p>
-            Each landmark stands in for a role or project. Pick one to fly there, or use the filters to change what&rsquo;s on
-            the map.
+            Every role, project, and program I&rsquo;ve been part of, pinned to a Seattle landmark. Pick one to fly there, or use
+            the filters to change what&rsquo;s on the map.
           </p>
         </div>
 
@@ -106,8 +105,16 @@ export function Experience() {
           <aside className={`mappanel ${selected ? '' : 'is-empty'}`} aria-live="polite" aria-label="Experience details">
             {selected ? (
               <>
-                <button type="button" className="panel-close" onClick={() => setSelectedId(null)} aria-label="Close details">
-                  esc ×
+                <button
+                  type="button"
+                  className="panel-close"
+                  onClick={() => setSelectedId(null)}
+                  aria-label="Close details"
+                  title="Close (Esc)"
+                >
+                  <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                    <path d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+                  </svg>
                 </button>
                 <DetailCard
                   key={selected.id}
@@ -116,7 +123,19 @@ export function Experience() {
                   description={selected.description}
                   highlights={selected.highlights}
                   tags={selected.tags}
-                  media={selected.photo ?? 'placeholder'}
+                  media={
+                    selected.photo
+                      ? {
+                          src: `${import.meta.env.BASE_URL}photos/${selected.photo.file}`,
+                          alt: selected.landmark,
+                          position: selected.photo.position,
+                          credit: {
+                            text: `Photo: ${selected.photo.author} · ${selected.photo.license}`,
+                            href: selected.photo.href,
+                          },
+                        }
+                      : 'placeholder'
+                  }
                   mediaCaption={selected.landmark}
                   heading="h3"
                 />
@@ -141,23 +160,6 @@ export function Experience() {
         </div>
         <p className="hint-mobile">Tap a landmark to open it. Use two fingers to move the map.</p>
 
-        <div className="ledger">
-          <div className="ledger__title">
-            <span>More from the ledger</span>
-            <span>Roles that didn&rsquo;t get a landmark</span>
-          </div>
-          {ledger.map((r) => (
-            <div className="ledger__row" key={r.org}>
-              <span className="ledger__org">{r.org}</span>
-              <span className="ledger__role">{r.role}</span>
-              <span className="ledger__note">{r.note}</span>
-              <span className="ledger__when">
-                {r.when}
-                <small>{r.place}</small>
-              </span>
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   )

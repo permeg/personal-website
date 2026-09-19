@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import hero from '../data/heroMap.json'
 import { now, profile } from '../data/content'
-import { pins } from '../data/pins'
+import { categories, pins } from '../data/pins'
 
 function useSeattleTime() {
   const fmt = () =>
@@ -25,7 +25,8 @@ const project = (lng: number, lat: number) => [(lng - minX) * kx * S, (maxY - la
 export function Hero() {
   const time = useSeattleTime()
   const [w, h] = hero.viewBox
-  const dots = pins.filter((p) => !p.placeholder)
+  // Medina sits across the lake, outside the outline; the hero only marks pins inside the city.
+  const dots = pins.filter((p) => project(p.coords.lng, p.coords.lat)[0] < w)
 
   return (
     <header className="hero" id="top">
@@ -46,8 +47,8 @@ export function Hero() {
               <span>Pereira</span>
             </h1>
             <p className="hero__lede">
-              Computer science and economics student at the <strong>University of Washington</strong>, building software that
-              has to be right: schedulers, data pipelines, and real-time systems.
+              Computer science and economics student at the <strong>University of Washington</strong>. This summer I interned at AWS
+              as a software development engineer.
             </p>
             <div className="hero__links">
               <a className="btn btn--primary" href="#experience">
@@ -80,14 +81,14 @@ export function Hero() {
         </div>
 
         <div className="hero__map">
-          <svg viewBox={`-30 -30 ${w + 60} ${h + 60}`} role="img" aria-label="Outline of Seattle with four landmarks marked">
+          <svg viewBox={`-30 -30 ${w + 140} ${h + 60}`} role="img" aria-label="Outline of Seattle with landmarks marked">
             <path d={hero.outline} fill="#12161c" stroke="#a7acaf" strokeOpacity=".75" strokeWidth="1.2" vectorEffect="non-scaling-stroke" strokeLinejoin="round" />
             <path d={hero.districts} fill="none" stroke="#3a424d" strokeWidth=".8" vectorEffect="non-scaling-stroke" strokeLinejoin="round" />
             {dots.map((p) => {
               const [x, y] = project(p.coords.lng, p.coords.lat)
               const left = x > w * 0.55
               return (
-                <a className="hp" key={p.id} href={`#experience?select=${p.id}`} aria-label={`${p.short}: open on the map`}>
+                <a className="hp" key={p.id} style={{ ['--dot' as string]: categories.find((c) => c.id === p.category)?.color }} href={`#experience?select=${p.id}`} aria-label={`${p.short}: open on the map`}>
                   <circle className="halo" cx={x} cy={y} r="15" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
                   <circle className="core" cx={x} cy={y} r="6" />
                   <text x={x + (left ? -26 : 26)} y={y + 7} textAnchor={left ? 'end' : 'start'}>
@@ -97,6 +98,7 @@ export function Hero() {
               )
             })}
           </svg>
+          <p className="hero__caption">Hover a dot to see where.</p>
         </div>
       </div>
     </header>

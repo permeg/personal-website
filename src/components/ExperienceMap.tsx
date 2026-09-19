@@ -14,12 +14,22 @@ interface Props {
   onSelect: (id: string | null) => void
 }
 
-// Whole city, so the outline reads; pins sit in the middle of it.
+// The "Whole city" view; the map opens fitted to the pins instead.
 const CITY_BOUNDS: [[number, number], [number, number]] = [
   [-122.445, 47.492],
-  [-122.226, 47.738],
+  [-122.2, 47.738],
 ]
 const PIN_ZOOM = 14
+const fitPadding = () =>
+  window.matchMedia('(max-width: 600px)').matches
+    ? { top: 64, bottom: 56, left: 36, right: 36 }
+    : { top: 90, bottom: 80, left: 80, right: 130 }
+
+const pinBounds = (list: Pin[]) => {
+  const b = new maplibregl.LngLatBounds()
+  for (const p of list) b.extend([p.coords.lng, p.coords.lat])
+  return b
+}
 
 const base = import.meta.env.BASE_URL
 maplibregl.setWorkerUrl(workerUrl)
@@ -42,8 +52,8 @@ export function ExperienceMap({ pins, visible, selectedId, onSelect }: Props) {
     const m = new maplibregl.Map({
       container,
       style: buildStyle(base),
-      bounds: CITY_BOUNDS,
-      fitBoundsOptions: { padding: 12 },
+      bounds: pinBounds(pinsRef.current),
+      fitBoundsOptions: { padding: fitPadding() },
       maxBounds: [
         [-122.62, 47.42],
         [-122.1, 47.83],
@@ -141,6 +151,7 @@ export function ExperienceMap({ pins, visible, selectedId, onSelect }: Props) {
       const z = m.getZoom()
       container.classList.toggle('is-close', z >= 13.1)
       container.classList.toggle('is-mid', z >= 11.5)
+      container.classList.toggle('is-far', z < 11)
       for (const w of waterEls) w.el.classList.toggle('is-off', z < w.minZoom)
     }
     m.on('zoom', onZoom)
@@ -150,9 +161,8 @@ export function ExperienceMap({ pins, visible, selectedId, onSelect }: Props) {
     // Expose view helpers to the control buttons via custom events.
     const fitCity = () => m.fitBounds(CITY_BOUNDS, { padding: 12, duration: reduceMotion() ? 0 : 1200 })
     const fitPins = () => {
-      const b = new maplibregl.LngLatBounds()
-      for (const p of pinsRef.current) if (pinEls.current.get(p.id)?.classList.contains('is-hidden') === false) b.extend([p.coords.lng, p.coords.lat])
-      if (!b.isEmpty()) m.fitBounds(b, { padding: { top: 90, bottom: 90, left: 110, right: 110 }, maxZoom: 13.6, duration: reduceMotion() ? 0 : 1200 })
+      const shown = pinsRef.current.filter((p) => pinEls.current.get(p.id)?.classList.contains('is-hidden') === false)
+      if (shown.length) m.fitBounds(pinBounds(shown), { padding: fitPadding(), maxZoom: 13.6, duration: reduceMotion() ? 0 : 1200 })
     }
     container.addEventListener('map:city', fitCity)
     container.addEventListener('map:pins', fitPins)
@@ -199,8 +209,8 @@ export function ExperienceMap({ pins, visible, selectedId, onSelect }: Props) {
     <div className="mapstage">
       <div className="mapcanvas" ref={host} />
       <div className="mapctl" role="group" aria-label="Map view">
+        <button type="button" onClick={() => fire('map:pins')}>All pins</button>
         <button type="button" onClick={() => fire('map:city')}>Whole city</button>
-        <button type="button" onClick={() => fire('map:pins')}>Fit pins</button>
       </div>
       <div className="legend" aria-hidden="true">
         {categories.map((c) => (

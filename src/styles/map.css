@@ -90,7 +90,6 @@
 .mappanel .card {
   border: 0;
   border-radius: 0;
-  min-height: 100%;
   animation: panel-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 @keyframes panel-in {
@@ -103,26 +102,30 @@
     transform: none;
   }
 }
+/* Sits over the top-right of the photo, so it needs its own backing to stay legible. */
 .panel-close {
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 40px;
+  right: 40px;
   z-index: 3;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 9px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--text-dim);
-  background: rgba(10, 13, 18, 0.8);
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  color: var(--text-primary);
+  background: rgba(10, 13, 18, 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   border: 1px solid var(--line-strong);
   border-radius: 3px;
   cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
 }
 .panel-close:hover {
-  color: var(--text-primary);
-  border-color: var(--text-dim);
+  color: var(--accent);
+  border-color: var(--accent);
+  background: rgba(10, 13, 18, 0.9);
 }
 
 .panel-empty {
@@ -416,6 +419,10 @@
 .pin.is-selected .pin__dot::after {
   background: var(--bg);
 }
+.pin--left .pin__label {
+  left: auto;
+  right: 38px;
+}
 .pin__label {
   position: absolute;
   left: 38px;
@@ -433,10 +440,6 @@
 
 /* ---------- mobile: panel becomes a bottom sheet ---------- */
 @media (max-width: 900px) {
-  .pin--left .pin__label {
-    left: auto;
-    right: 38px;
-  }
   .mapshell {
     display: block;
     height: clamp(560px, 82svh, 760px);
@@ -470,6 +473,10 @@
   .mappanel .card__media {
     aspect-ratio: 21 / 9;
   }
+  .panel-close {
+    top: 32px;
+    right: 32px;
+  }
   .legend {
     display: none;
   }
@@ -492,5 +499,21 @@
 @media (max-width: 900px) {
   .hint-mobile {
     display: block;
+  }
+}
+
+/* zoomed all the way out, pins shrink and keep quiet unless picked */
+.is-far .pin__dot {
+  transform: scale(0.66);
+}
+.is-far .pin:not(.is-selected):not(:hover) .pin__label {
+  opacity: 0;
+}
+.pin__label {
+  transition: opacity 0.25s;
+}
+@media (max-width: 600px) {
+  .pin:not(.is-selected) .pin__label {
+    display: none;
   }
 }

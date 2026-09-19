@@ -42,13 +42,8 @@ export const icons = {
 } as const
 
 export const landmarks: Landmark[] = [
-  { id: 'needle', name: 'Space Needle', lat: 47.6205, lng: -122.3493, icon: 'needle' },
   { id: 'colman', name: 'Colman Dock ferries', lat: 47.6027, lng: -122.3392, icon: 'ferry' },
   { id: 'smith', name: 'Smith Tower', lat: 47.6019, lng: -122.3316, icon: 'tower' },
-  { id: 'stadiums', name: 'The stadiums', lat: 47.5932, lng: -122.3314, icon: 'stadium' },
-  { id: 'gate', name: 'Chinatown gate', lat: 47.5984, lng: -122.3246, icon: 'gate' },
-  { id: 'gasworks', name: 'Gas Works Park', lat: 47.6455, lng: -122.3345, icon: 'stacks' },
-  { id: 'locks', name: 'Ballard Locks', lat: 47.6650, lng: -122.3972, icon: 'salmon' },
   { id: 'westpoint', name: 'West Point Lighthouse', lat: 47.6617, lng: -122.4358, icon: 'lighthouse' },
   { id: 'alki', name: 'Alki Point Lighthouse', lat: 47.5765, lng: -122.4207, icon: 'lighthouse' },
   { id: 'boeing', name: 'Boeing Field', lat: 47.5302, lng: -122.3018, icon: 'plane' },

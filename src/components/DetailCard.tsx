@@ -1,5 +1,13 @@
 import type { ElementType } from 'react'
 
+export interface CardPhoto {
+  src: string
+  alt: string
+  /** CSS object-position, to keep the subject in frame when cropped to 16:9. */
+  position?: string
+  credit?: { text: string; href: string }
+}
+
 export interface DetailCardProps {
   org: string
   title: string
@@ -7,8 +15,9 @@ export interface DetailCardProps {
   highlights?: string[]
   tags?: string[]
   index?: string
-  /** 'placeholder' draws the dashed 16:9 photo slot; a string is an image URL; omit for no media. */
-  media?: 'placeholder' | string
+  /** 'placeholder' draws the dashed 16:9 slot; a photo fills it; omit for no media. */
+  media?: 'placeholder' | CardPhoto
+  /** Small label laid over the bottom-left of the media slot. */
   mediaCaption?: string
   heading?: ElementType
   className?: string
@@ -27,13 +36,27 @@ export function DetailCard({
   heading: Heading = 'h3',
   className = '',
 }: DetailCardProps) {
+  const photo = media && media !== 'placeholder' ? media : null
   return (
     <article className={`card ${className}`.trim()}>
       {media && (
-        <div className="card__media" role={media === 'placeholder' ? 'img' : undefined} aria-label={media === 'placeholder' ? 'Photo placeholder' : undefined}>
-          {media !== 'placeholder' && <img src={media} alt="" loading="lazy" />}
-          {media === 'placeholder' && <span>{mediaCaption ?? 'Photo to come'}</span>}
-        </div>
+        <figure className="card__figure">
+          <div
+            className={photo ? 'card__media card__media--photo' : 'card__media'}
+            role={photo ? undefined : 'img'}
+            aria-label={photo ? undefined : 'Photo placeholder'}
+          >
+            {photo && <img src={photo.src} alt={photo.alt} style={{ objectPosition: photo.position }} />}
+            {(mediaCaption || !photo) && <span>{mediaCaption ?? 'Photo to come'}</span>}
+          </div>
+          {photo?.credit && (
+            <figcaption className="card__credit">
+              <a href={photo.credit.href} target="_blank" rel="noreferrer">
+                {photo.credit.text}
+              </a>
+            </figcaption>
+          )}
+        </figure>
       )}
       <div className="card__top">
         {index && <span className="card__index">{index}</span>}

@@ -8,28 +8,22 @@ export function About() {
     <section className="section" id="about" aria-labelledby="about-h">
       <div className="wrap">
         <div className="section__head">
-          <span>
-            <b>01</b>About
-          </span>
+          <span>About</span>
           <span className="meta">{profile.location}</span>
         </div>
         <div className="about">
           <h2 className="h2" id="about-h">
-            Problems with a right answer, and systems that keep <em>giving it.</em>
+            Hi, I&rsquo;m <em>Megan.</em>
           </h2>
           <div className="about__body">
             <p>
-              I&rsquo;m a computer science and economics student at the University of Washington, graduating in June 2027.
-              Most of what I build sits between an algorithm and a real deadline: a solver that matches mentors to mentees, a
-              pipeline that can&rsquo;t lose an event, a classifier reading a brainwave stream.
+              I&rsquo;m a computer science and economics student at the University of Washington, graduating in June 2028.
+              This summer I interned at AWS as a software development engineer, building DynamoDB stream ingestion for an
+              analytics platform.
             </p>
             <p>
-              This summer I interned at AWS as a software development engineer, working with DynamoDB, Lambda, and IAM.
-              Outside of that I&rsquo;m VP of Synaptech, a developer at Kairos, and a TA at the Allen School.
-            </p>
-            <p>
-              I&rsquo;ve been teaching in some form since 2020: tutoring, instructing kids in Python and robotics, founding
-              Bellevue ByteCamp. It keeps making me a clearer engineer.
+              I&rsquo;m also the VP of Synaptech, a software developer at Kairos, and a teaching assistant for CSE 121, the
+              intro Java course at the Allen School.
             </p>
           </div>
         </div>
@@ -59,9 +53,7 @@ export function Education() {
     <section className="section" id="education" aria-labelledby="education-h">
       <div className="wrap">
         <div className="section__head">
-          <span>
-            <b>02</b>Education
-          </span>
+          <span>Education</span>
           <span className="meta">47.6553° N, 122.3035° W</span>
         </div>
         <div className="edu">
@@ -86,9 +78,7 @@ export function Projects() {
     <section className="section" id="projects" aria-labelledby="projects-h">
       <div className="wrap">
         <div className="section__head">
-          <span>
-            <b>04</b>Projects
-          </span>
+          <span>Projects</span>
           <span className="meta">{projects.length} entries</span>
         </div>
         <h2 className="h2" id="projects-h" style={{ marginBottom: 'clamp(32px, 5vw, 56px)', maxWidth: '20ch' }}>
@@ -117,16 +107,14 @@ export function Contact() {
     <section className="section" id="contact" aria-labelledby="contact-h">
       <div className="wrap">
         <div className="section__head">
-          <span>
-            <b>05</b>Contact
-          </span>
+          <span>Contact</span>
           <span className="meta">{profile.location}</span>
         </div>
         <h2 className="h2" id="contact-h">
           Let&rsquo;s <em>talk.</em>
         </h2>
         <p className="contact__sub">
-          Internships, research, teaching, or a good scheduling problem: I&rsquo;m happy to hear about any of them.
+          Internships, research, teaching: I&rsquo;m happy to hear about any of them.
         </p>
         <a className="contact__mail" href={`mailto:${profile.email}`}>
           {profile.email}

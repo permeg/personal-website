@@ -13,9 +13,9 @@ export const projects: Project[] = [
     id: 'kairos',
     index: '01',
     org: 'Kairos · Sep 2025 – Present',
-    title: 'Reading focus from a headband',
+    title: 'Real-time EEG state detection app',
     description:
-      'Real-time neural-state detection. A C++/Python app takes streaming EEG from a Muse headband over Bluetooth and LSL and classifies it with an SVM.',
+      'A C++/Python app that classifies streaming EEG from a Muse headband, received over Bluetooth and LSL, with an SVM.',
     highlights: [
       'Adaptive thresholding recalibrates the decision boundary per user across sessions.',
       'FFT-based feature extraction in NumPy and SciPy feeds the classifier live.',
@@ -26,7 +26,7 @@ export const projects: Project[] = [
     id: 'husky',
     index: '02',
     org: 'Husky Coding Project · Oct 2025 – Jun 2026',
-    title: 'A progression-tree app that works offline',
+    title: 'Offline-capable progression-tree mobile app',
     description:
       'A React Native and TypeScript app with a custom state engine and REST API for multi-attribute progression trees, containerized on Kubernetes.',
     highlights: [
@@ -39,7 +39,7 @@ export const projects: Project[] = [
     id: 'synaptech',
     index: '03',
     org: 'Synaptech · May 2025 – Present',
-    title: 'Speed-dating, solved as a constraint problem',
+    title: 'Mentor–mentee matching system',
     description:
       'Two-phase pipeline that pairs 29 mentees with 22 mentors across five rounds: CP-SAT for the schedule, the Hungarian algorithm for the preferences.',
     highlights: [
@@ -52,9 +52,9 @@ export const projects: Project[] = [
     id: 'marketbeacon',
     index: '04',
     org: 'MarketBeacon · React, Express, Finnhub API',
-    title: 'Stock alerts, with the dashboards to prove it',
+    title: 'Full-stack stock alert system',
     description:
-      'A full-stack stock-alert system with sub-5-second latency and 98% uptime, instrumented like a production service.',
+      'A stock-alert system with sub-5-second latency and 98% uptime, with monitoring and logging set up like a production service.',
     highlights: [
       'Async REST endpoints tuned for 500+ concurrent requests.',
       'Prometheus and Grafana for metrics, the ELK stack for logs.',
@@ -66,7 +66,7 @@ export const projects: Project[] = [
     id: 'bookswap',
     index: '05',
     org: 'BookSwap · React, Node.js',
-    title: 'Peer-to-peer textbook exchange',
+    title: 'Peer-to-peer textbook exchange web app',
     description:
       'Led a four-person team to design and launch a marketplace for students trading textbooks, cutting their costs by 30–50% per transaction.',
     highlights: [
@@ -80,7 +80,7 @@ export const projects: Project[] = [
     id: 'reaction-wheels',
     index: '06',
     org: 'Husky Satellite Lab · Jan – Aug 2025',
-    title: 'A wireless bridge for reaction wheels',
+    title: 'Reaction wheel telemetry bridge and dashboard',
     description:
       'Live telemetry for satellite reaction-wheel testing: an ESP32 wireless link and a Flask/Plotly dashboard for hardware-in-the-loop simulation.',
     highlights: [
